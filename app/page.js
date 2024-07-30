@@ -53,7 +53,7 @@ export default function Home() {
               </p>
             </h1>
             <div>
-              <img src={user.photoURL} className="rounded-full w-16 h-16" />
+              <img src={user.photoURL} className="rounded-full w-16 h-16"></img>
               <span>{user.displayName}</span>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function Home() {
             <section className="flex flex-col pt-5 pb-5 justify-center rounded-md bg-card-background/50" >
               <h1 className="flex justify-center text-3xl text-align left">Login</h1>
               <p className="flex justify-center">
-                Doesn't have an account yet?
+                Does not have an account yet?
                 <Link href="/pages/signup" className="text-blue hover:underline ">
                   <>Sign Up</>
                 </Link>
