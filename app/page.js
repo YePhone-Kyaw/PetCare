@@ -1,6 +1,5 @@
 "use client";
 import NavBar from "@/app/_components/navbar";
-import Image from "next/image";
 import Footer from "./_components/footer";
 import { useUserAuth } from "@/app/_utils/auth-context";
 import Link from "next/link";
@@ -37,13 +36,6 @@ export default function Home() {
     }
   }
 
-  // async function handleSignOut() {
-  //   try {
-  //     await firebaseSignOut();
-  //   } catch (error) {
-  //     console.log(`Error: ${error.message}`);
-  //   }
-  // }
 
   const handleSetEmail = (event) => setEmail(event.target.value);
   const handleSetPassword = (event) => setPassword(event.target.value);
