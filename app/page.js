@@ -71,7 +71,7 @@ export default function Home() {
               </p>
             </h1>
             <div className="flex justify-between " >
-              <img src={user.photoURL} className="rounded-full w-16 h-16" />
+              <img src={user.photoURL} alt="User Profile" className="rounded-full w-16 h-16" />
               <span>{user.displayName}</span>
             </div>
           </div>
@@ -81,9 +81,6 @@ export default function Home() {
               <h1 className="flex justify-center text-3xl text-align left">Login</h1>
               <p className="flex justify-center">
                 Does not have an account yet?
-                <Link href="./pages/signup" className="text-blue hover:underline ml-2">
-                  Sign Up
-                </Link>
                  <button onClick={toggleSignUp} className="text-blue hover:underline ml-2" >
                   Sign Up</button> 
               </p>
