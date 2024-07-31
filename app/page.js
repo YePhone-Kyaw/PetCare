@@ -5,7 +5,7 @@ import Footer from "./_components/footer";
 import { useUserAuth } from "@/app/_utils/auth-context";
 import Link from "next/link";
 import { useState } from "react";
-import SignUpPage from "./pages/singup";
+import SignUpPage from "./_components/singup";
 
 export default function Home() {
   const { user, gitHubSignIn, googleSignIn, emailSignIn, firebaseSignOut } =
@@ -63,14 +63,11 @@ export default function Home() {
       <NavBar />
       <div className="flex flex-1 justify-center items-center bg-main-background text-font-color">
         {user ? (
-          <div className="flex flex-col justify-center w-full max-w-md p-8 bg-card-background rounded-lg shadow-md" >
-            <h1 className=" flex text-center pt-5 pb-5 justify-center rounded-md bg-card-background/50">
-              Welcome to Pet
-              <p className="bg-navigation rounded text-main-background ">
-                Care
-              </p>
+          <div className="flex flex-col justify-center w-full max-w-sm p-8 bg-card-background rounded-lg shadow-md" >
+            <h1 className="text-center text-2xl pt-5 pb-5 justify-center rounded-md bg-card-background/50">
+              Welcome to Pet Care
             </h1>
-            <div className="flex justify-between " >
+            <div className="flex justify-center items-center space-x-4" >
               <img src={user.photoURL} alt="User Profile" className="rounded-full w-16 h-16" />
               <span>{user.displayName}</span>
             </div>
