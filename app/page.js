@@ -1,9 +1,11 @@
 "use client";
+
 import NavBar from "@/app/_components/navbar";
 import Footer from "./_components/footer";
 import { useUserAuth } from "@/app/_utils/auth-context";
 import Link from "next/link";
 import { useState } from "react";
+import SignUpPage from "./pages/singup";
 
 export default function Home() {
   const { user, gitHubSignIn, googleSignIn, emailSignIn, firebaseSignOut } =
@@ -11,6 +13,12 @@ export default function Home() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showSignUp, setShowSignUp] = useState(false);
+    const [loginError, setLoginError] = useState("");
+
+    const toggleSignUp = () => {
+      setShowSignUp(!showSignUp);
+    }
 
   async function handleGitHubSignIn() {
     try {
@@ -30,30 +38,40 @@ export default function Home() {
 
   async function handleEmailSignIn() {
     try {
+      setLoginError("");
       await emailSignIn(email, password);
+      console.log("Login successful");
     } catch (error) {
       console.log(`Email sign in error: ${error.message}`);
+      setLoginError(error.message);
     }
   }
+  
 
 
-  const handleSetEmail = (event) => setEmail(event.target.value);
-  const handleSetPassword = (event) => setPassword(event.target.value);
+  const handleSetEmail = (event) => {
+    setEmail(event.target.value)
+    setLoginError("");
+  };
+  const handleSetPassword = (event) => {
+    setPassword(event.target.value)
+    setLoginError("");
+  };
 
   return (
     <main className="flex flex-col min-h-screen">
       <NavBar />
       <div className="flex flex-1 justify-center items-center bg-main-background text-font-color">
         {user ? (
-          <div>
-            <h1 className="text-center">
-              Welcome to Pet{" "}
+          <div className="flex flex-col justify-center w-full max-w-md p-8 bg-card-background rounded-lg shadow-md" >
+            <h1 className=" flex text-center pt-5 pb-5 justify-center rounded-md bg-card-background/50">
+              Welcome to Pet
               <p className="bg-navigation rounded text-main-background ">
                 Care
               </p>
             </h1>
-            <div>
-              <img src={user.photoURL} className="rounded-full w-16 h-16"></img>
+            <div className="flex justify-between " >
+              <img src={user.photoURL} className="rounded-full w-16 h-16" />
               <span>{user.displayName}</span>
             </div>
           </div>
@@ -63,19 +81,20 @@ export default function Home() {
               <h1 className="flex justify-center text-3xl text-align left">Login</h1>
               <p className="flex justify-center">
                 Does not have an account yet?
-                <Link href="/pages/signup" className="text-blue hover:underline ">
-                  <>Sign Up</>
+                <Link href="./pages/signup" className="text-blue hover:underline ml-2">
+                  Sign Up
                 </Link>
-                <Link href="/pages/page" ><>HW</></Link>
+                 <button onClick={toggleSignUp} className="text-blue hover:underline ml-2" >
+                  Sign Up</button> 
               </p>
+              {loginError && <p className="text-red-500 text-center" >{loginError}</p> }
               <div className="flex flex-col space-y-4" >
               <label>Email Address</label>
             <input type="email" value={email} onChange={handleSetEmail}  className="p-2 border rounded-lg" placeholder="abc@example.com" required />
             <label>Password</label>
             <input type="password" value={password} onChange={handleSetPassword} className="p-2 border rounded-lg" placeholder="Enter 8 character or more" required />
             <button  className="mt-6 mb-6 w-full bg-navigation hover:bg-hover-style text-font-color font-bold py-2 rounded" onClick={handleEmailSignIn} >Log In</button>
-              </div>
-
+              </div>              
               <div className="flex justify-center space-x-5 mt-5">
                 <button
                   className="flex bg-navigation rounded-md p-2 hover:bg-hover-style"
@@ -107,6 +126,13 @@ export default function Home() {
                   Sign in with Google
                 </button>
               </div>
+              {showSignUp && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                  <div className="bg-white p-4 rounded-lg">
+                    <SignUpPage onClose={toggleSignUp} />
+                  </div>
+                </div>
+              )}
             </section>
           </div>
         )}

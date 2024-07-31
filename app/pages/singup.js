@@ -1,33 +1,42 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useUserAuth } from "../_utils/auth-context";
 
-export default function SignUpPage() {
-
-const {emailSignUp} = useUserAuth();
+export default function SignUpPage({ onClose }) {
+  const { emailSignUp } = useUserAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [error, setError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
+
+    if (password != confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
       await emailSignUp(email, password);
-      router.push("/");
+      // window.location.href("/");
+      onClose();
     } catch (error) {
+      setError(error.message);
       console.log(`Sign Up Error: ${error.message}`);
     }
   };
 
   const handleSetEmail = (event) => setEmail(event.target.value);
   const handleSetPassword = (event) => setPassword(event.target.value);
+  const handleSetConfirmPassword = (event) => setConfirmPassword(event.target.value);
 
   return (
     <main>
-      <div className="flex justify-center items-center min-h-screen bg-main-background">
+      <div className="flex justify-center items-center bg-main-background">
         <div className="w-full max-w-md p-8 bg-card-background rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
@@ -58,13 +67,32 @@ const {emailSignUp} = useUserAuth();
                 required
               />
             </div>
+            <div>
+              <label htmlFor="confirmPassword" className="block mb-2">
+                Confirm your password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={handleSetConfirmPassword}
+                className="w-full p-2 border rounded"
+                required
+              />
+            </div>
             <button
               type="submit"
-              className="w-full bg-navigation text-white p-2 rounded hover:bg-hover-style"
+              className="w-full mt-10 bg-navigation text-font-color p-2 rounded hover:bg-hover-style"
             >
               Sign Up
             </button>
           </form>
+          <button
+            onClick={onClose}
+            className="w-full mt-5 bg-gray-300 text-font-color p-2 rounded hover:bg-gray-400"
+          >
+            Close
+          </button>
         </div>
       </div>
     </main>
