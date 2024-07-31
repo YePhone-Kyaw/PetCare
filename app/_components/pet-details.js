@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import PetCard from "@/app/_components/pet-card";
 import NavBar from "@/app/_components/navbar";
 import Footer from "./footer";
+import { useUserAuth } from "../_utils/auth-context";
 
 export default function PetDetails() {
   const [pets, setPets] = useState([]);
@@ -13,6 +14,8 @@ export default function PetDetails() {
   const [breeds, setBreeds] = useState([]);
   const [selectedBreed, setSelectedBreed] = useState("");
   const [page, setPage] = useState(0);
+
+  const user = useUserAuth() || {};
 
   const dogApiKey =
     "live_x2lm6KZ978HFQv41YmBJnvMaMTDqszF22sKenKKsx9ZHOP6RIEhOM0K4lR9gNGRm";
@@ -103,8 +106,9 @@ export default function PetDetails() {
     <main className="flex flex-col min-h-screen text-font-color">
       <div className=" flex flex-col bg-main-background" >
       <NavBar />
-
-        <div className="flex justify-center mb-4">
+            {user ? (
+        <div>
+            <div className="flex justify-center mb-4">
           <button onClick={() => handlePetTypeChange("dog")} className="p-5 text-font-color hover:bg-hover-style bg-navigation/30 rounded-full border border-font-color">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +162,12 @@ export default function PetDetails() {
             <PetCard key={pet.id} petObj={pet} petType={pet.type} />
           ))}
         </div>
+        </div>
+
+            ) : null}
+        
       </div>
+       
       <Footer />
     </main>
   );
