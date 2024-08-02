@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer p-2 bg-footer text-font-color">
       <div className="flex justify-between">
-        <p className="text-sm" >Developed by George</p>
+        <p className="text-sm" >Developed by Ye Phone Kyaw (George)</p>
         <p className="flex space-x-5">
           <Link href="https://github.com/YePhone-Kyaw">
             <svg
