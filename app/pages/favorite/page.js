@@ -5,7 +5,7 @@ export default function FavoritePage() {
     return(
         <main>
             <div>
-                Favorite page...
+                Favorite page....
             </div>
         </main>
     )
