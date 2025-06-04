@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 export default function PetCard({ petObj, petType, onFavorite }) {
@@ -19,7 +20,7 @@ export default function PetCard({ petObj, petType, onFavorite }) {
   return (
     <div className="border border-hover-style bg-navigation m-1 p-2 rounded-lg">
       {url ? (
-        <img
+        <Image
           className="w-full h-60 object-cover border-2 border-cyan-900 rounded-md"
           src={url}
           alt={name}
